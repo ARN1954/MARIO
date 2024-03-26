@@ -36,21 +36,30 @@
 ## Simple talker demo that published std_msgs/Strings messages
 ## to the 'chatter' topic
 
-import rospy
+import sys
+import rclpy
+from rclpy import qos
 from std_msgs.msg import String
 
-def talker():
-    pub = rospy.Publisher('chatter', String, queue_size=10)
-    rospy.init_node('talker', anonymous=True)
-    rate = rospy.Rate(10) # 10hz
-    while not rospy.is_shutdown():
-        hello_str = "hello world %s" % rospy.get_time()
-        rospy.loginfo(hello_str)
-        pub.publish(hello_str)
-        rate.sleep()
+def timer_call():
+    msg = String()
+    msg.data = 'Hello from SRA: %d' % timer_call.counter
+    timer_call.pub.publish(msg)        
+    timer_call.node.get_logger().info('Publishing: "%s"' % msg.data)
+    timer_call.counter += 1
 
-if __name__ == '__main__':
+def main(args=None):
+    rclpy.init(args=sys.argv)
+    node = rclpy.create_node("talker")
+    timer_call.node= node 
+    timer_call.counter=1   
+    timer_call.pub = node.create_publisher(String,"chatter_listener",qos_profile=qos.qos_profile_parameters)    
+    node.create_timer(0.1,timer_call)
     try:
-        talker()
-    except rospy.ROSInterruptException:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
         pass
+    rclpy.shutdown()
+
+if __name__ == "__main__":
+    main()
