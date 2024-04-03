@@ -40,26 +40,50 @@ import sys
 import rclpy
 from rclpy import qos
 from std_msgs.msg import String
-
-def timer_call():
-    msg = String()
-    msg.data = 'Hello from SRA: %d' % timer_call.counter
-    timer_call.pub.publish(msg)        
-    timer_call.node.get_logger().info('Publishing: "%s"' % msg.data)
-    timer_call.counter += 1
+import time    
 
 def main(args=None):
     rclpy.init(args=sys.argv)
+    nodes = []    
     node = rclpy.create_node("talker")
-    timer_call.node= node 
-    timer_call.counter=1   
-    timer_call.pub = node.create_publisher(String,"chatter_listener",qos_profile=qos.qos_profile_parameters)    
-    node.create_timer(0.1,timer_call)
+    pub1 = node.create_publisher(String, "talker_1", qos_profile=qos.qos_profile_parameters)
+    pub2 = node.create_publisher(String, "talker_2", qos_profile=qos.qos_profile_parameters)
+    pub3 = node.create_publisher(String, "talker_3", qos_profile=qos.qos_profile_parameters)
+    counter = 1
+    id = 1
+
+    while(1):
+        msg = String()
+        msg.data = "Hello from SRA %d" %counter
+        if id==1:
+            pub1.publish(msg)
+        elif id == 2:
+            pub2.publish(msg)
+        elif id == 3:
+            pub3.publish(msg)           
+                
+        node.get_logger().info('Publishing: "%s"' % msg.data)
+        count += 1
+        if count > 50:
+            count = 1
+            id += 1
+            if id > 3:
+                id = 1
+        
+        time.sleep(0.1)  
+        nodes.append(node)
+    
     try:
-        rclpy.spin(node)
+        rclpy.spin(nodes[0])  # Spin only one node to handle callbacks
     except KeyboardInterrupt:
         pass
+
     rclpy.shutdown()
 
 if __name__ == "__main__":
     main()
+
+
+
+    
+

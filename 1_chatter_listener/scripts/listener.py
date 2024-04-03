@@ -40,14 +40,22 @@ import sys
 import rclpy
 from std_msgs.msg import String
 
-def listener(msg:String):
-    listener.node.get_logger().info('I heard: "%s"' % msg.data)
+def cb1(node, msg:String):
+    node.get_logger().info("Heard from talker1 %s" %(msg.data))
+
+def cb2(node, msg:String):
+    node.get_logger().info("Heard from talker2 %s" %(msg.data))
+    
+def cb3(node, msg:String):
+    node.get_logger().info("Heard from talker3 %s" %(msg.data))
 
 def main(args=None):
     rclpy.init(args=sys.argv)
     node = rclpy.create_node("listener")
-    listener.node = node
-    listener.sub= node.create_subscription(String,"chatter_listener",listener,10)
+    sub1 = node.create_subscription(String, "talker_1", lambda msg: cb1(node, msg), 10)
+    sub2 = node.create_subscription(String, "talker_2", lambda msg: cb2(node, msg), 10)
+    sub3 = node.create_subscription(String, "talker_3", lambda msg: cb3(node, msg), 10)
+
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
