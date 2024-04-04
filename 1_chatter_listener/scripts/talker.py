@@ -63,9 +63,9 @@ def main(args=None):
             pub3.publish(msg)           
                 
         node.get_logger().info('Publishing: "%s"' % msg.data)
-        count += 1
-        if count > 50:
-            count = 1
+        counter += 1
+        if counter > 50:
+            counter = 1
             id += 1
             if id > 3:
                 id = 1
