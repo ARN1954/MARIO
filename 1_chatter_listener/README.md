@@ -21,11 +21,11 @@ source install/setup.bash
 ```
 ros2 run chatter_listener talker.py
 ```
-* To run the listener `open another terminal` and run:
+* To run the listener `open another terminal` and again source it:
 ```
 source install/setup.bash
 ```
-* Run the listener
+* Now run the listener
 ```
 ros2 run chatter_listener listener.py
 ```
