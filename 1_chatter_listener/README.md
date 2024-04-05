@@ -29,7 +29,7 @@ source install/setup.bash
 ```
 ros2 run chatter_listener listener.py
 ```
-*TALKER
+* TALKER
 <p align="centere"><img src ="assets/talker.png" width="800" height="700"></p>
-*LISTENER
+* LISTENER
 <p align="centere"><img src ="assets/listener.png" width="800" height="700"></p>
