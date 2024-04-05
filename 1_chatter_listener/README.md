@@ -29,5 +29,6 @@ source install/setup.bash
 ```
 ros2 run chatter_listener listener.py
 ```
-<p align="left"><img src ="assets/talker.png" width="400" height="250">
-<p align="right"><img src ="assets/listener.png" width="400" height="250"></p>
+*TALKER
+<p align="centere"><img src ="assets/talker.png" width="800" height="500">
+<p align="centere"><img src ="assets/listener.png" width="800" height="500"></p>
