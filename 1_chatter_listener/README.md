@@ -3,7 +3,7 @@ Steps to run talker and listener scripts :
 * To run the talker and listener first we need to copy the 1_chatter_listener to ros2_ws src
 
 ```
-cp -r /home/(user_name)/MARIO/2_dh_simulation /home/(user_name)/ros2_ws/src
+cp -r /home/(user_name)/MARIO/1_chatter_listenr /home/(user_name)/ros2_ws/src
 ```
 * To build the necesarry packages we need to install them so for that go to ros2_ws
 ```
